@@ -95,9 +95,8 @@ data <- c(length(rivers), sum(rivers), mean(rivers), median(rivers), var(rivers)
           sd(rivers), min(rivers), max(rivers))
 data
 
-# the result of the code is a vector that consists of the
-# num of data points, sum, mean, median, variance, standard deviation,
-# minimum and maximum of the 141 major rivers in North America
+# The results shows the built in datasets of rivers in north america and 
+# shows that length,sum,mean,median,var,sd,min,max of rivers
 
 #------------------------
 
@@ -113,7 +112,7 @@ celebrityName <- c("Tom Cruise", "Rolling Stones", "Oprah Winfrey",
                    "Dan Brown", "Bruce Springsteen", "Donald Trump",
                    "Muhammad Ali", "Paul McCartney", "George Lucas",
                    "Elton John", "David Letterman", "Phil Mickelson",
-                   "J.K. Rowling", "Bradd Pitt", "Peter Jackson",
+                   "J.K Rowling", "Bradd Pitt", "Peter Jackson",
                    "Dr. Phil McGraw", "Jay Lenon", "Celine Dion", "Kobe Bryant")
 
 celeb_pay <- c(67, 90, 225, 110, 90, 332, 302, 41, 52, 88, 55,
@@ -129,8 +128,9 @@ celebrity <- data.frame(
 View(celebrity)
 
 # 8.b
-celebrity$celebrity_name[[15]] <- "J.K. Rowling"
-celebrity$pay[[15]] <- 90
+celebrity$power_ranking[celebrity$celebrity_name == "J.K Rowling"] <- 15
+celebrity$pay[celebrity$celebrity_name == "J.K Rowling"] <- 90
+celebrity
 
 View(celebrity)
 
@@ -139,3 +139,79 @@ View(celebrity)
 write.csv(celebrity, "/cloud/project/PowerRanking.csv")
 PowerRanking <- read.csv("PowerRanking.csv")
 PowerRanking
+
+# 8.d
+
+new_rows <- celebrity[10:20,]
+save(new_rows, file="Ranks.RData")
+View(new_rows)
+
+# 8.e
+
+# selects rows 10 to 20 from the original data frame, 
+# saves the selected rows as Ranks.RData, and then prints the selected rows as the output.
+
+# -------------------------------------
+
+# 9.a
+
+# install.packages("readxl")
+library(readxl)
+excel_file <- read_excel("hotels-vienna.xlsx")
+excel_file
+View(excel_file)
+
+# 9.b
+
+dim_file <- dim(excel_file)
+dim_file
+
+# the output is 428 rows and 24 columns
+
+# 9.c
+colnames(excel_file)
+select_cols <- excel_file[,c("country", "neighbourhood", "price", "stars", "accommodation_type", "rating")]
+View(select_cols)
+
+# 9.d
+
+save(select_cols, file="new.RData")
+View(select_cols)
+
+# 9.e
+
+load("new.RData")
+select_cols
+
+firstSix <- head(select_cols)
+lastSix <- tail(select_cols)
+
+# --------------------------------------
+
+# 10.a
+
+veggies <- list("Broccoli", "Cabbage", "Tomato", "Eggplant", "Peas",
+            "Corn", "Mushroom", "Lettuce", "Potato", "Sweet Potato")
+
+veggies
+
+# 10.b
+
+veggies <- append(veggies, c("Pumpkin", "Radish"))
+veggies
+
+# 10.c
+
+veggies <- append(veggies, c("Beans", "Celery", "Beet", "Green Pepper"), after = 5)
+
+veggie_length <- length(veggies)
+veggie_length     
+
+veggies
+
+# 10.d
+
+veggies <- veggies[c(-5,-10,-15)]
+new_veggie_length <- length(veggies)
+new_veggie_length
+veggies
