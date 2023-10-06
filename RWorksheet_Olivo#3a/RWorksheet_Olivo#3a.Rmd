@@ -50,11 +50,12 @@ temp
 # c
 city_temp <- data.frame(city,temp)
 
-View(city_temp)
+city_temp
+
 
 # d
 names(city_temp) <- c("City", "Temperature")
-View(city_temp)
+city_temp
 
 # e
 
@@ -122,5 +123,24 @@ matr
 # ARRAYS
 
 # 3 a 
+
+
+values <- c(1, 2, 3, 6, 7, 8, 9, 0, 3, 4, 5, 1)
+rep_values <- rep(values, each = 2)
+
+arr <- array(rep_values, dim = c(2,4,3))
+arr
+
+# 3 b 
+# three dimensions
+
+# 3 c
+dimnames(arr) <- list(
+  letters[1:2], # row names
+  LETTERS[1:4], # col names
+  c("1st-Dimensional Array", "2nd-Dimensional Array", "3rd-Dimensional Array") # dim names
+)
+
+arr
 
 ```
