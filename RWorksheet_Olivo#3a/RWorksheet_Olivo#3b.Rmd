@@ -9,9 +9,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r name, echo = TRUE} 
-
-
-
 #1.a
 resp_no <- c(1:20)
 sex <- c(2,2,1,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1,2)
