@@ -93,7 +93,7 @@ print(new_order_data)
 # 5
 imported_table <- read.table(file =  "/cloud/project/worksheet#4/import_march.csv", header = TRUE, sep = ",")
 
-View(imported_table)
+imported_table
 
 
 # ------------
@@ -102,7 +102,8 @@ View(imported_table)
 
 randomNum <- readline(prompt = "Enter number from 1 to 50: ")
 
-randomNum <- as.numeric(randomNum)
+#cant knit if there is as.numeric
+#randomNum <- as.numeric(randomNum)
 
 paste("The number you have chosen is", randomNum)
 
@@ -160,16 +161,16 @@ if (nrow(highscorers) > 0) {
 
 # 8.c
 
-firstTest <- sum(mathScore$Grade1) / nrow(math)
+firstTest <- sum(mathScore$Grade1) / nrow(mathScore)
 firstTest
 
-secondTest <- sum(mathScore$Grade2) / nrow(math)
+secondTest <- sum(mathScore$Grade2) / nrow(mathScore)
 secondTest
 
-thirdTest <- sum(mathScore$Grade3) / nrow(math)
+thirdTest <- sum(mathScore$Grade3) / nrow(mathScore)
 thirdTest
 
-fourthTest <- sum(mathScore$Grade4) / nrow(math)
+fourthTest <- sum(mathScore$Grade4) / nrow(mathScore)
 fourthTest
 
 
@@ -200,35 +201,35 @@ if (mathScore[1,2] > mathScore[1,3] && mathScore[1,2] > mathScore[1,4] && mathSc
 
 # thea scores
 if (mathScore[2,2] > mathScore[2,3] && mathScore[2,2] > mathScore[2,4] && mathScore[2,2] > mathScore[2,5]) {
-  annieHighest <- mathScore[2,2]
+  theaHighest <- mathScore[2,2]
 } else if (mathScore[2,3] > mathScore[2,4] && mathScore[2,3] > mathScore[2,5]) {
-  annieHighest <- mathScore[2,3]
+  theaHighest <- mathScore[2,3]
 } else if (mathScore[2,4] > mathScore[2,5] && mathScore[2,2] > mathScore[2,5]) {
-  annieHighest <- mathScore[2,4]
+  theaHighest <- mathScore[2,4]
 } else {
-  annieHighest <- mathScore[2,5]
+  theaHighest <- mathScore[2,5]
 }
 
 # steve scores
 if (mathScore[3,2] > mathScore[3,3] && mathScore[3,2] > mathScore[3,4] && mathScore[3,2] > mathScore[3,5]) {
-  annieHighest <- mathScore[3,2]
+  steveHighest <- mathScore[3,2]
 } else if (mathScore[3,3] > mathScore[3,4] && mathScore[3,3] > mathScore[3,5]) {
-  annieHighest <- mathScore[2,3]
+  steveHighest <- mathScore[2,3]
 } else if (mathScore[3,4] > mathScore[3,5] && mathScore[3,2] > mathScore[3,5]) {
-  annieHighest <- mathScore[3,4]
+  steveHighest <- mathScore[3,4]
 } else {
-  annieHighest <- mathScore[3,5]
+  steveHighest <- mathScore[3,5]
 }
 
 # hanna scores
 if (mathScore[4,2] > mathScore[4,3] && mathScore[4,2] > mathScore[4,4] && mathScore[4,2] > mathScore[4,5]) {
-  annieHighest <- mathScore[4,2]
+  hannaHighest <- mathScore[4,2]
 } else if (mathScore[4,3] > mathScore[4,4] && mathScore[4,3] > mathScore[4,5]) {
-  annieHighest <- mathScore[2,3]
+  hannaHighest <- mathScore[2,3]
 } else if (mathScore[4,4] > mathScore[4,5] && mathScore[4,2] > mathScore[4,5]) {
-  annieHighest <- mathScore[4,4]
+  hannaHighest <- mathScore[4,4]
 } else {
-  annieHighest <- mathScore[4,5]
+  hannaHighest <- mathScore[4,5]
 }
 
 mathScore$HighestGrades <- c(annieHighest, theaHighest, steveHighest, hannaHighest)
