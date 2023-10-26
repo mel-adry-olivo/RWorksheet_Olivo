@@ -79,7 +79,8 @@ summary(factor_months_vector)
 
 # 4
 
-factor_data <- c(1,4,3)
+factor_data <- c("East", "West", "North")
+factor_frequency <- c(1,4,3)
 
 new_order_data <- factor(factor_data,levels = c("East","West","North"))
 
@@ -90,7 +91,7 @@ print(new_order_data)
 # ------------
 
 # 5
-imported_table <- read.table(file =  "/cloud/project/worksheet#4/import_march.csv", header = TRUE, sep = ",")
+imported_table <- read.table(file =  "C:/Users/Mel Adry/Downloads/import_march.csv", header = TRUE, sep = ",")
 
 View(imported_table)
 
@@ -147,6 +148,46 @@ math
 
 # 8.b
 
+math$Average <- (math$Grade1 + math$Grade2 + math$Grade3 + math$Grade4) / 4
+
+highscorers <- math[math$Average > 90,]
+highscorers
+
+
+if (nrow(highscorers) > 0) {
+  paste(highscorers$Name, "'s average grade this semester is", high_scorers$Average)
+} else {
+  paste("No students have an average math score over 90.")
+}
+
+# 8.c
+
+firstTest <- sum(math$Grade1) / nrow(math)
+firstTest
+
+secondTest <- sum(math$Grade2) / nrow(math)
+secondTest
+
+thirdTest <- sum(math$Grade3) / nrow(math)
+thirdTest
+
+fourthTest <- sum(math$Grade4) / nrow(math)
+fourthTest
+
+
+if (firstTest < 80) {
+  paste("The 1st test was difficult.")
+} else if(secondTest < 80) {
+  paste("The 2nd test was difficult.")
+} else if(thirdTest < 80) {
+  paste("The 3rd test was difficult.")
+} else if(fourthTest < 80) {
+  paste("The 4th test was difficult.")
+} else {
+  paste("NO test had an average score less than 80.")
+}
+
+# 8.d
 
 
 ```
