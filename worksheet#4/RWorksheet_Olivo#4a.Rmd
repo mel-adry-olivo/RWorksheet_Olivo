@@ -91,7 +91,7 @@ print(new_order_data)
 # ------------
 
 # 5
-imported_table <- read.table(file =  "C:/Users/Mel Adry/Downloads/import_march.csv", header = TRUE, sep = ",")
+imported_table <- read.table(file =  "/cloud/project/worksheet#4/import_march.csv", header = TRUE, sep = ",")
 
 View(imported_table)
 
@@ -144,7 +144,6 @@ math <- data.frame(
   Grade4 = grade4
 )
 
-math
 
 # 8.b
 
@@ -152,7 +151,6 @@ math$Average <- (math$Grade1 + math$Grade2 + math$Grade3 + math$Grade4) / 4
 
 highscorers <- math[math$Average > 90,]
 highscorers
-
 
 if (nrow(highscorers) > 0) {
   paste(highscorers$Name, "'s average grade this semester is", high_scorers$Average)
@@ -184,10 +182,9 @@ if (firstTest < 80) {
 } else if(fourthTest < 80) {
   paste("The 4th test was difficult.")
 } else {
-  paste("NO test had an average score less than 80.")
+  paste("No test had an average score less than 80.")
 }
 
 # 8.d
-
 
 ```
