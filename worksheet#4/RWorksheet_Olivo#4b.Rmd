@@ -1,0 +1,137 @@
+---
+title: "RWorksheet_Olivo#4b"
+author: "Mel Adry Olivo"
+date: "2023-11-08"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+1. Using the for loop, create an R script that will display a 5x5 matrix as shown in Figure 1. 
+
+It must contain vectorA = [1,2,3,4,5] and a 5 x 5 zero matrix.
+
+```{r name, echo = TRUE}
+matZero <- matrix(c(0,0,0,0,0), 5, 5)
+vectorA <- c(1,2,3,4,5)
+
+for (i in 1:length(vectorA)) {
+  matVec0[i, ] <- abs(vectorA - vectorA[i])
+}
+print(matVec0)
+
+```
+
+2. Print the string "*" using for() function. The output should be the same as shown
+in Figure 2
+
+```{r name, echo = TRUE}
+for(i in 1:5) {
+  stars <- rep("*", i)
+  print(stars)
+}
+```
+
+3. Get an input from the user to print the Fibonacci sequence starting from the 1st input
+up to 500. Use repeat and break statements. Write the R Scripts and its output.
+
+```{r name, echo = TRUE}
+
+userInput <- as.integer(readline("Enter starting number for Fibonacci sequence: "))
+
+x <- userInput
+y <- 0
+
+
+cat("Fibonacci sequence starting from", userInput, ":\n")
+
+repeat {
+  
+  next_num <- x + y
+  
+  if (next_num > 500){
+    break
+  }
+  cat(next_num, " ")
+  x <- y
+  y <- next_num
+  
+}
+
+```
+
+4. Import the dataset as shown in Figure 1 you have created previously.
+
+4a. What is the R script for importing an excel or a csv file? Display the first 6 rows of the dataset? 
+Show your codes and its result.
+
+```{r name, echo = TRUE}
+prevData <- read.csv("householdData.csv")
+head(prevData)
+```
+
+4b. Create a subset for gender(female and male). How many observations are there in
+Male? How about in Female? 
+Write the R scripts and its output.
+
+```{r name, echo = TRUE}
+males <- prevData[prevData$Gender == "M",]
+males
+
+females <- prevData[prevData$Gender == "F",]
+females
+
+numofMale <- nrow(males)
+numofMale
+
+numofFem <- nrow(females)
+numofFem
+```
+
+
+4c. Create a graph for the number of males and females for Household Data. Use plot(),
+chart type = barplot. Make sure to place title, legends, and colors. 
+Write the R scripts and its result
+
+```{r name, echo = TRUE}
+
+totalMaleFemale <- table(prevData$Gender)
+barplot(totalMaleFemale,
+        main = "Number of Males and Females",
+        xlab = "Gender",
+        ylab = "Count",
+        col = c("red", "blue"),
+        legend.text = rownames(totalMaleFemale),
+        beside = TRUE)
+```
+
+5. The monthly income of Dela Cruz family was spent on the following:
+
+Food Electricity Savings Miscellaneous
+60      10         5         25
+
+5a. a. Create a piechart that will include labels in percentage.Add some colors and title of the chart. Write the R scripts and show its output.
+
+```{r name, echo = TRUE}
+
+spending_data <- data.frame(
+  Category = c("Food", "Electricity", "Savings", "Miscellaneous"),
+  Value = c(60, 10, 5, 25)
+)
+
+spending_data$Percentage <- spending_data$Value / sum(spending_data$Value) * 100
+
+colors <- c("red", "blue", "green", "purple")
+
+pie(spending_data$Value,
+    labels = paste(spending_data$Category, "(",spending_data$Percentage,"%)"),
+    col = colors,
+    main = "Monthly Income Spending of Dela Cruz Family")
+
+legend("topright", spending_data$Category, fill = colors)
+
+
+```
