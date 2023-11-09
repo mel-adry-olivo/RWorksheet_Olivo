@@ -19,9 +19,9 @@ matZero <- matrix(c(0,0,0,0,0), 5, 5)
 vectorA <- c(1,2,3,4,5)
 
 for (i in 1:length(vectorA)) {
-  matVec0[i, ] <- abs(vectorA - vectorA[i])
+  matZero[i, ] <- abs(vectorA - vectorA[i])
 }
-print(matVec0)
+print(matZero)
 
 ```
 
@@ -126,12 +126,179 @@ spending_data$Percentage <- spending_data$Value / sum(spending_data$Value) * 100
 
 colors <- c("red", "blue", "green", "purple")
 
-pie(spending_data$Value,
-    labels = paste(spending_data$Category, "(",spending_data$Percentage,"%)"),
+pie(spending_data$Value, 
+    labels = paste(spending_data$Category,"(",spending_data$Percentage,"%)"),
     col = colors,
     main = "Monthly Income Spending of Dela Cruz Family")
 
 legend("topright", spending_data$Category, fill = colors)
 
+```
 
+6. Use the iris dataset
+
+```{r name, echo = TRUE}
+data(iris)
+```
+
+6a. Check for the structure of the dataset using the str() function. Describe what you
+have seen in the output.
+
+```{r name, echo = TRUE}
+str(iris)
+
+# The dataset is a collection of information about iris flowers. It has a collection of data of the length and width of the sepal and also the length and width of the petal for 150 different iris flowers. It also records the type of iris species to which each flower belongs. There are three species in the dataset: setosa, versicolor, and virginica.
+```
+
+6b. b. Create an R object that will contain the mean of the sepal.length, sepal.width,petal.length,and petal.width. What is the R script and its result?
+
+```{r name, echo = TRUE}
+meanOfFlowers <- colMeans(iris[,1:4])
+meanOfFlowers
+```
+
+6c. Create a pie chart for the Species distribution. Add title, legends, and colors. Write the R script and its result.
+
+```{r name, echo = TRUE}
+species <- table(iris$Species)
+nameOfSpecies <- c("Setosa", "Versicolor", "Virginica")
+
+pie(species,
+    labels = nameOfSpecies,
+    col = c("red", "green", "blue"),
+    main = "Species Distribution in Iris Dataset")
+
+legend("topleft", legend = levels(iris$Species), fill = c("red", "green", "blue"),)
+```
+
+6d. Subset the species into setosa, versicolor, and virginica. Write the R scripts and show the last six (6) rows of each species.
+
+```{r name, echo = TRUE}
+iris
+subsetSetosa <- iris[iris$Species == "setosa",]
+subsetSetosa
+
+subsetVersicolor <- iris[iris$Species == "versicolor",]
+subsetVersicolor
+
+subsetVirginica <- iris[iris$Species == "virginica",]
+subsetVirginica
+
+tail(subsetSetosa)
+tail(subsetVersicolor)
+tail(subsetVirginica)
+```
+
+6c. Create a scatterplot of the sepal.length and sepal.width using the different species(setosa,versicolor,virginica). Add a title = “Iris Dataset”, subtitle = “Sepal
+width and length, labels for the x and y axis, the pch symbol and colors should be based on
+the species.
+
+```{r name, echo = TRUE}
+plot(iris$Sepal.Length, iris$Sepal.Width,
+     xlab = "Sepal Length", ylab = "Sepal Width",
+     main = "Iris Dataset", sub = "Sepal width and length",
+     pch = as.numeric(iris$Species), col = as.numeric(iris$Species))
+
+legend("topright", legend = levels(iris$Species),
+       pch = 1:3, col = 1:3,
+       title = "Species")
+```
+
+6f. Interpret the result.
+
+The scatterplot helps us see how iris flowers of different species differ in terms of sepal length and width.
+
+The Setosa flowers typically have short sepal length and wide sepal width. They are grouped in the upper left part of the plot.
+
+Versicolor flowers have average sepal length and width. They are in the middle part.
+
+Virginica flowers are usually long in sepal length and have narrower sepal width. They form a group in the right part.
+
+Based on the plot, it is easy to see the differences between the three iris species based on sepal length and width. 
+
+
+7. Import the alexa-file.xlsx. Check on the variations. Notice that there are extra whitespaces among black variants (Black Dot, Black Plus, Black Show, Black
+Spot). Also on the white variants (White Dot, White Plus, White Show, White
+Spot).
+
+```{r name, echo = TRUE}
+library(readxl)
+alexa_file <- read_excel("alexa_file.xlsx")
+View(alexa_file)
+```
+
+7a. Rename the white and black variants by using gsub() function.
+
+```{r name, echo = TRUE}
+alexa_file$variation <- gsub("Black  Dot", "BlackDot", alexa_file$variation)
+alexa_file$variation <- gsub("Black  Plus", "BlackPlus", alexa_file$variation)
+alexa_file$variation <- gsub("Black  Show", "BlackShow", alexa_file$variation)
+alexa_file$variation <- gsub("Black  Spot", "BlackSpot", alexa_file$variation)
+
+alexa_file$variation <- gsub("White  Dot", "WhiteDot", alexa_file$variation)
+alexa_file$variation <- gsub("White  Plus", "WhitePlus", alexa_file$variation)
+alexa_file$variation <- gsub("White  Show", "WhiteShow", alexa_file$variation)
+alexa_file$variation <- gsub("White  Spot", "WhiteSpot", alexa_file$variation)
+
+View(alexa_file)
+```
+
+7b.  Get the total number of each variations and save it into another object. Save the
+object as variations.RData. Write the R scripts. What is its result?
+
+```{r name, echo = TRUE}
+#install.packages("dplyr")
+library("dplyr")
+
+variations_total <- alexa_file %>% 
+  count(alexa_file$variation)
+
+variations_total
+save(variations_total, file = "variations.RData")
+```
+
+7c. From the variations.RData, create a barplot(). Complete the details of the chart
+which include the title, color, labels of each bar.
+
+```{r name, echo = TRUE}
+
+load("variations.RData")
+variations_total
+varNames <- variations_total$`alexa_file$variation`
+
+totalPlot <- barplot(variations_total$n,
+        names.arg = varNames,
+        main = "Total number of each variations",
+        xlab = "Name of Variations",
+        ylab = "Total of each Variatons",
+        col = 1:16,
+        space = 2)
+```
+
+7d. Create a barplot() for the black and white variations. Plot it in 1 frame, side by
+side. Complete the details of the chart.
+
+```{r name, echo = TRUE}
+
+blackVars <- variations_total[variations_total$`alexa_file$variation` %in% c("Black", "BlackPlus" , "BlackShow" ,"BlackSpot" , "BlackDot"), ]
+
+whiteVars <- variations_total[variations_total$`alexa_file$variation` %in% c("White", "WhiteDot", "WhitePlus", "WhiteShow", " WhiteSpot"), ]
+
+par(mfrow = c(1,2))
+
+barplot(height = blackVars$n,
+        names.arg = blackVars$`alexa_file$variation`,
+        col = c("black"),
+        main = "Black Variations",
+        xlab = "Variation",
+        ylab = "Count",
+        border = "black")
+
+barplot(height = whiteVars$n,
+        names.arg = whiteVars$`alexa_file$variation`,
+        col = c("black"),
+        main = "White Variations",
+        xlab = "Variation",
+        ylab = "Count",
+        border = "black")
 ```
