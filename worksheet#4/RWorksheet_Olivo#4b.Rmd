@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 It must contain vectorA = [1,2,3,4,5] and a 5 x 5 zero matrix.
 
-```{r name, echo = TRUE}
+```{r}
 matZero <- matrix(c(0,0,0,0,0), 5, 5)
 vectorA <- c(1,2,3,4,5)
 
@@ -28,7 +28,7 @@ print(matZero)
 2. Print the string "*" using for() function. The output should be the same as shown
 in Figure 2
 
-```{r name, echo = TRUE}
+```{r}
 for(i in 1:5) {
   stars <- rep("*", i)
   print(stars)
@@ -38,14 +38,17 @@ for(i in 1:5) {
 3. Get an input from the user to print the Fibonacci sequence starting from the 1st input
 up to 500. Use repeat and break statements. Write the R Scripts and its output.
 
-```{r name, echo = TRUE}
+```{r}
 
 userInput <- as.integer(readline("Enter starting number for Fibonacci sequence: "))
 
-x <- userInput
-y <- 0
-
-
+if(is.na(userInput || userInput < 0)) {
+  cat("Please enter something")
+} else {
+  x <- userInput
+  y <- 0
+  
+  
 cat("Fibonacci sequence starting from", userInput, ":\n")
 
 repeat {
@@ -60,6 +63,7 @@ repeat {
   y <- next_num
   
 }
+}
 
 ```
 
@@ -68,7 +72,7 @@ repeat {
 4a. What is the R script for importing an excel or a csv file? Display the first 6 rows of the dataset? 
 Show your codes and its result.
 
-```{r name, echo = TRUE}
+```{r}
 prevData <- read.csv("householdData.csv")
 head(prevData)
 ```
@@ -77,7 +81,7 @@ head(prevData)
 Male? How about in Female? 
 Write the R scripts and its output.
 
-```{r name, echo = TRUE}
+```{r}
 males <- prevData[prevData$Gender == "M",]
 males
 
@@ -96,7 +100,7 @@ numofFem
 chart type = barplot. Make sure to place title, legends, and colors. 
 Write the R scripts and its result
 
-```{r name, echo = TRUE}
+```{r}
 
 totalMaleFemale <- table(prevData$Gender)
 barplot(totalMaleFemale,
@@ -115,7 +119,7 @@ Food Electricity Savings Miscellaneous
 
 5a. a. Create a piechart that will include labels in percentage.Add some colors and title of the chart. Write the R scripts and show its output.
 
-```{r name, echo = TRUE}
+```{r}
 
 spending_data <- data.frame(
   Category = c("Food", "Electricity", "Savings", "Miscellaneous"),
@@ -137,14 +141,14 @@ legend("topright", spending_data$Category, fill = colors)
 
 6. Use the iris dataset
 
-```{r name, echo = TRUE}
+```{r}
 data(iris)
 ```
 
 6a. Check for the structure of the dataset using the str() function. Describe what you
 have seen in the output.
 
-```{r name, echo = TRUE}
+```{r}
 str(iris)
 
 # The dataset is a collection of information about iris flowers. It has a collection of data of the length and width of the sepal and also the length and width of the petal for 150 different iris flowers. It also records the type of iris species to which each flower belongs. There are three species in the dataset: setosa, versicolor, and virginica.
@@ -152,14 +156,14 @@ str(iris)
 
 6b. b. Create an R object that will contain the mean of the sepal.length, sepal.width,petal.length,and petal.width. What is the R script and its result?
 
-```{r name, echo = TRUE}
+```{r}
 meanOfFlowers <- colMeans(iris[,1:4])
 meanOfFlowers
 ```
 
 6c. Create a pie chart for the Species distribution. Add title, legends, and colors. Write the R script and its result.
 
-```{r name, echo = TRUE}
+```{r}
 species <- table(iris$Species)
 nameOfSpecies <- c("Setosa", "Versicolor", "Virginica")
 
@@ -173,7 +177,7 @@ legend("topleft", legend = levels(iris$Species), fill = c("red", "green", "blue"
 
 6d. Subset the species into setosa, versicolor, and virginica. Write the R scripts and show the last six (6) rows of each species.
 
-```{r name, echo = TRUE}
+```{r}
 iris
 subsetSetosa <- iris[iris$Species == "setosa",]
 subsetSetosa
@@ -193,7 +197,7 @@ tail(subsetVirginica)
 width and length, labels for the x and y axis, the pch symbol and colors should be based on
 the species.
 
-```{r name, echo = TRUE}
+```{r}
 plot(iris$Sepal.Length, iris$Sepal.Width,
      xlab = "Sepal Length", ylab = "Sepal Width",
      main = "Iris Dataset", sub = "Sepal width and length",
@@ -221,15 +225,15 @@ Based on the plot, it is easy to see the differences between the three iris spec
 Spot). Also on the white variants (White Dot, White Plus, White Show, White
 Spot).
 
-```{r name, echo = TRUE}
+```{r}
 library(readxl)
 alexa_file <- read_excel("alexa_file.xlsx")
-View(alexa_file)
+alexa_file
 ```
 
 7a. Rename the white and black variants by using gsub() function.
 
-```{r name, echo = TRUE}
+```{r}
 alexa_file$variation <- gsub("Black  Dot", "BlackDot", alexa_file$variation)
 alexa_file$variation <- gsub("Black  Plus", "BlackPlus", alexa_file$variation)
 alexa_file$variation <- gsub("Black  Show", "BlackShow", alexa_file$variation)
@@ -240,13 +244,13 @@ alexa_file$variation <- gsub("White  Plus", "WhitePlus", alexa_file$variation)
 alexa_file$variation <- gsub("White  Show", "WhiteShow", alexa_file$variation)
 alexa_file$variation <- gsub("White  Spot", "WhiteSpot", alexa_file$variation)
 
-View(alexa_file)
+alexa_file
 ```
 
 7b.  Get the total number of each variations and save it into another object. Save the
 object as variations.RData. Write the R scripts. What is its result?
 
-```{r name, echo = TRUE}
+```{r}
 #install.packages("dplyr")
 library("dplyr")
 
@@ -260,7 +264,7 @@ save(variations_total, file = "variations.RData")
 7c. From the variations.RData, create a barplot(). Complete the details of the chart
 which include the title, color, labels of each bar.
 
-```{r name, echo = TRUE}
+```{r}
 
 load("variations.RData")
 variations_total
@@ -272,33 +276,45 @@ totalPlot <- barplot(variations_total$n,
         xlab = "Name of Variations",
         ylab = "Total of each Variatons",
         col = 1:16,
-        space = 2)
+        space = 0.1,
+        cex.names = 0.5,
+        las = 2)
+
+knitr::include_graphics("/cloud/project/worksheet#4/totalVars.png")
 ```
 
 7d. Create a barplot() for the black and white variations. Plot it in 1 frame, side by
 side. Complete the details of the chart.
 
-```{r name, echo = TRUE}
+```{r}
 
 blackVars <- variations_total[variations_total$`alexa_file$variation` %in% c("Black", "BlackPlus" , "BlackShow" ,"BlackSpot" , "BlackDot"), ]
 
-whiteVars <- variations_total[variations_total$`alexa_file$variation` %in% c("White", "WhiteDot", "WhitePlus", "WhiteShow", " WhiteSpot"), ]
+whiteVars <- variations_total[variations_total$`alexa_file$variation` %in% c("White", "WhiteDot", "WhitePlus", "WhiteShow", "WhiteSpot"), ]
 
 par(mfrow = c(1,2))
+blackVars
 
-barplot(height = blackVars$n,
+blackPlot <- barplot(height = blackVars$n,
         names.arg = blackVars$`alexa_file$variation`,
         col = c("black"),
         main = "Black Variations",
         xlab = "Variation",
         ylab = "Count",
-        border = "black")
+        border = "black",
+        space = 0.5,
+        cex.names = 0.4)
 
-barplot(height = whiteVars$n,
+
+whitePlot <- barplot(height = whiteVars$n,
         names.arg = whiteVars$`alexa_file$variation`,
-        col = c("black"),
+        col = c("white"),
         main = "White Variations",
         xlab = "Variation",
         ylab = "Count",
-        border = "black")
+        border = "black",
+        space = 0.5,
+        cex.names = 0.4)
+
+knitr::include_graphics("/cloud/project/worksheet#4/bwVars.png")
 ```
