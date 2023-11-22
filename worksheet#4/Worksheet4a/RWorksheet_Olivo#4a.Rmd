@@ -27,7 +27,6 @@ householdData <- data.frame(
 
 householdData
 
-
 # 1.a 
 # In the data, there are three variables which are the shoe size, height, and gender. There are 28 observations
 
@@ -91,7 +90,7 @@ print(new_order_data)
 # ------------
 
 # 5
-imported_table <- read.table(file =  "/cloud/project/worksheet#4/import_march.csv", header = TRUE, sep = ",")
+imported_table <- read.table(file =  "/cloud/project/worksheet#4/Worksheet4a/import_march.csv", header = TRUE, sep = ",")
 
 imported_table
 

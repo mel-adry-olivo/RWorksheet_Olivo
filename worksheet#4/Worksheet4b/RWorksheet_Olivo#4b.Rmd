@@ -103,13 +103,15 @@ Write the R scripts and its result
 ```{r}
 
 totalMaleFemale <- table(prevData$Gender)
-barplot(totalMaleFemale,
-        main = "Number of Males and Females",
-        xlab = "Gender",
-        ylab = "Count",
-        col = c("red", "blue"),
-        legend.text = rownames(totalMaleFemale),
-        beside = TRUE)
+plot(
+    totalMaleFemale,
+    main = "Number of Males and Females",
+    xlab = "Gender",
+    ylab = "Count",
+    col = c("red", "blue"),
+    legend.text = rownames(totalMaleFemale),
+    beside = TRUE
+    )
 ```
 
 5. The monthly income of Dela Cruz family was spent on the following:
@@ -280,7 +282,7 @@ totalPlot <- barplot(variations_total$n,
         cex.names = 0.5,
         las = 2)
 
-knitr::include_graphics("/cloud/project/worksheet#4/totalVars.png")
+knitr::include_graphics("/cloud/project/worksheet#4/Worksheet4b/totalVars.png")
 ```
 
 7d. Create a barplot() for the black and white variations. Plot it in 1 frame, side by
@@ -316,5 +318,5 @@ whitePlot <- barplot(height = whiteVars$n,
         space = 0.5,
         cex.names = 0.4)
 
-knitr::include_graphics("/cloud/project/worksheet#4/bwVars.png")
+knitr::include_graphics("/cloud/project/worksheet#4/Worksheet4b/bwVars.png")
 ```
