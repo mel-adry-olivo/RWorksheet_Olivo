@@ -1,0 +1,80 @@
+---
+title: "RWorksheet_Olivo#4c"
+author: "Mel Adry Olivo"
+date: "2023-11-22"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. Use the dataset mpg
+Download and open the mpg file. Upload it to your OWN environment
+
+1a. Show your solutions on how to import a csv file into the environment.
+
+```{r}
+library(readr)
+
+mpg_file <- read.csv("mpg.csv")
+mpg_file
+
+```
+
+1b.Which variables from mpg dataset are categorical?
+
+```{r}
+
+str(mpg_file)
+
+# manufacturer, model, trans, drv, fl, class variables are categorical
+
+```
+
+1c. Which are continuous variables?
+
+```{r}
+str(mpg_file)
+
+# X, displ, year, cyl, cty, hwy are continuous variables
+```
+
+2. Which manufacturer has the most models in this data set? Which model has the most variations?
+Show your answer.
+
+```{r}
+
+manufacturer_asTable <- table(mpg_file$manufacturer)
+names(manufacturer_asTable)[which.max(manufacturer_asTable)]
+
+# dodge manufacturer has the most models
+
+model_asTable <- table(mpg_file$model)
+model_asTable
+names(model_asTable)[which.max(model_asTable)]
+
+# caravan 2wd has the most variations
+
+```
+
+
+2a. Group the manufacturers and find the unique models. Show your codes and result.
+
+```{r}
+
+manufacturers_models <- data.frame(Manufacturer = mpg_file$manufacturer, Model = mpg_file$model)
+
+unique_mods <- unique(manufacturers_models)
+
+unique_mods
+unique_mods$mpg_file.model
+
+```
+
+2b. Graph the result by using plot() and ggplot(). Write the codes and its result.
+
+```{r}
+
+
+```
