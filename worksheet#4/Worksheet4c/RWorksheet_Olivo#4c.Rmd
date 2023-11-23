@@ -46,12 +46,15 @@ Show your answer.
 ```{r}
 
 manufacturer_asTable <- table(mpg_file$manufacturer)
+manufacturer_asTable
 names(manufacturer_asTable)[which.max(manufacturer_asTable)]
 
 # dodge manufacturer has the most models
 
+
 model_asTable <- table(mpg_file$model)
 model_asTable
+
 names(model_asTable)[which.max(model_asTable)]
 
 # caravan 2wd has the most variations
@@ -64,11 +67,10 @@ names(model_asTable)[which.max(model_asTable)]
 ```{r}
 
 manufacturers_models <- data.frame(Manufacturer = mpg_file$manufacturer, Model = mpg_file$model)
+manufacturers_models
 
 unique_mods <- unique(manufacturers_models)
-
 unique_mods
-unique_mods$mpg_file.model
 
 ```
 
@@ -76,5 +78,80 @@ unique_mods$mpg_file.model
 
 ```{r}
 
+#install.packages("ggplot2")
+library(ggplot2)
+
+factoredManufacturer <- as.factor(unique_mods$Manufacturer)
+manufacturerPlot <- plot(as.factor(factoredManufacturer),
+                 main = "Unique Model per Manufacturer", 
+                 cex.names = 0.8, las = 2)
+
+
+#install.packages("dplyr")
+library(dplyr)
+
+unique_count <- unique_mods %>% 
+  count(unique_mods$Manufacturer)
+unique_count
+
+names(unique_count) <- c("Manufacturer", "Number of Models")
+unique_count
+
+ggplot(unique_count, aes(x = Manufacturer, y = `Number of Models`)) +
+geom_bar(stat = "identity")
+
+```
+
+2. Same dataset will be used. You are going to show the relationship of the model and the manufacturer.
+
+2a. What does ggplot(mpg, aes(model, manufacturer)) + geom_point() show?
+
+```{r}
+ggplot(mpg_file, aes(model, manufacturer)) + geom_point() 
+
+# It plots the mpgdataset with model on the x-axis and manufacturer on the y-axis.
+# In this plot, each point represents a car model
+```
+
+2b.For you, is it useful? If not, how could you modify the data to make it more informative?
+
+```{r}
+
+# It is useful if you want to know how many models each manufacturer have.
+
+# I can make it more informative by color coding each points by the class variable and add a label to each point with the cty variable
+
+```
+
+3. Plot the model and the year using ggplot(). Use only the top 20 observations. Write the codes and its results
+
+```{r}
+
+ggplot(head(mpg_file,20), aes(x = model, y = year)) + geom_point()
+
+```
+
+4. Using the pipe (%>%), group the model and get the number of cars per model. Show codes and its result
+
+```{r}
+
+library(dplyr)
+
+model_car_count <- mpg_file %>% 
+  group_by(model) %>%
+  summarize(number_of_cars = n())
+
+model_car_count
+
+```
+
+4a. Plot using geom_bar() using the top 20 observations only. The graphs shoudl have a title, labels and colors. Show code and results
+
+```{r}
+
+model_car_count
+obs_20 <- head(model_car_count, 20)
+
+ggplot(obs_20, aes(x = model, y = number_of_cars)) + geom_bar(stat = "identity", fill = rainbow(20)) + labs(title = "Number of Cars per Model", x = "Model" , y = "Number of cars")
 
 ```
