@@ -1,0 +1,288 @@
+---
+title: "RWorksheet_Olivo#6"
+author: "Mel Adry Olivo"
+date: "2023-12-19"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. Create a data frame for the table below. 
+Show your solution.
+a. Compute the descriptive statistics using different packages (Hmisc and pastecs).
+Write the codes and its result.
+
+```{r}
+
+studentScore <- data.frame(
+  Student = c(1:10),
+  Pre_test = c(55,54,47,57,51,61,57,54,63,58),
+  Post_test = c(61,60,56,63,56,63,59,56,62,61)
+)
+studentScore
+
+#install.packages("pastecs")
+#install.packages("Hmisc")
+
+library(pastecs)
+library(Hmisc)
+
+pastecsStats <- stat.desc(studentScore)
+pastecsStats
+
+hmiscStats <- Hmisc::describe(studentScore[,c("Pre_test","Post_test")])
+hmiscStats
+
+```
+
+2. The Department of Agriculture was studying the effects of several levels of a fertilizer
+on the growth of a plant. For some analyses, it might be useful to convert the fertilizer
+levels to an ordered factor.
+
+```{r}
+
+#install.packages("dplyr")
+
+library(dplyr)
+
+lvlFertilizer <- c(10,10,10, 20,20,50,10,20,10,50,20,50,20,10)
+orderedLvlFertilizer <- factor(lvlFertilizer, levels = unique(lvlFertilizer))
+
+summaryFertilizer <- summary(orderedLvlFertilizer)
+summaryFertilizer
+
+```
+
+3. Abdul Hassan, president of Floor Coverings Unlimited, has asked you to study the exercise levels 
+undertaken by 10 subjects were “l”, “n”, “n”, “i”, “l” , “l”, “n”, 
+“n”, “i”, “l” ; n=none, l=light, i=intense
+a. What is the best way to represent this in R?
+
+```{r}
+
+lvlExercise <- c("n", "l", "n", "n", "l", "l", "n", "n", "i", "l")
+factoredLvlExercise <- factor(lvlExercise, levels = c("n","l","i"))
+
+summaryExercise <- summary(factoredLvlExercise)
+summaryExercise
+
+```
+
+4. Sample of 30 tax accountants from all the states and territories of Australia and their
+individual state of origin is specified by a character vector of state mnemonics as:
+state <- c("tas", "sa", "qld", "nsw", "nsw", "nt", "wa", "wa", "qld",
+"vic", "nsw", "vic", "qld", "qld", "sa", "tas", "sa", "nt",
+"wa", "vic", "qld", "nsw", "nsw", "wa", "sa", "act", "nsw",
+"vic", "vic", "act")
+
+a. Apply the factor function and factor level. Describe the results.
+
+```{r}
+
+states <- c("tas", "sa", "qld", "nsw", "nsw", "nt", "wa", "wa", "qld", "vic", "nsw", "vic", "qld", "qld", "sa", "tas", "sa", "nt", "wa", "vic", "qld", "nsw", "nsw", "wa", "sa", "act", "nsw", "vic", "vic", "act")
+
+factoredState <- factor(states)
+factoredState
+
+summaryStates <- summary(factoredState)
+summaryStates
+
+# The result will be a factor that aligns with the unique values in the original character vector. Each level represents a specific state or region, and they are organized in alphabetical order.
+
+```
+
+5. From #4 - continuation:
+
+• Suppose we have the incomes of the same tax accountants in another vector (in suitably
+large units of money)
+
+incomes <- c(60, 49, 40, 61, 64, 60, 59, 54,
+62, 69, 70, 42, 56, 61, 61, 61, 58, 51, 48,
+65, 49, 49, 41, 48, 52, 46, 59, 46, 58, 43)
+
+a. Calculate the sample mean income for each state we can now use the special function
+tapply():
+
+Example: giving a means vector with the components labelled by the levels
+incmeans <- tapply(incomes, statef, mean)
+
+Note: The function tapply() is used to apply a function, here mean(), to each group
+of components of the first argument, here incomes, defined by the levels of the second
+component, here state 2
+
+```{r}
+
+incomes <- c(60, 49, 40, 61, 64, 60, 59, 54,
+62, 69, 70, 42, 56, 61, 61, 61, 58, 51, 48,
+65, 49, 49, 41, 48, 52, 46, 59, 46, 58, 43)
+
+meanIncomes <- tapply(incomes, factoredState, mean)
+meanIncomes
+
+```
+
+b.Copy the results and interpret.
+
+Result: 
+
+    act      nsw       nt      qld       sa      tas      vic       wa 
+44.50000 57.33333 55.50000 53.60000 55.00000 60.50000 56.00000 52.25000 
+
+This output contains the mean of income for each state. And each names are levels of the factor of stateFactor. 
+
+
+
+6.Calculate the standard errors of the state income means (refer again to number 3)
+
+stdError <- function(x) sqrt(var(x)/length(x))
+
+Note: After this assignment, the standard errors are calculated by:
+incster <- tapply(incomes, statef, stdError)
+
+a. What is the standard error? Write the codes.
+
+```{r}
+
+stdError <- function(x) sqrt(var(x)/length(x))
+incster <- tapply(incomes, states, stdError)
+
+standardError <- tapply(incomes, factoredState, stdError)
+standardError
+
+```
+
+b. Interpret the results.
+
+The vector incster contains the standard errors associated with the estimated mean income for each state. The standard error reflects the variability of the sample mean, with larger standard errors indicating greater variability.
+
+
+7. Use the titanic dataset.
+
+a. Subset the titatic dataset of those who survived and not survived. Show the codes
+and its result.
+
+```{r}
+
+#install.packages("titanic")
+
+library(titanic)
+
+data("titanic_train")
+
+titanic_data <- titanic_train
+
+str(titanic_data)
+
+survived <- subset(titanic_data, Survived == 1)
+survived
+
+dead <- subset(titanic_data, Survived == 0)
+dead
+
+head(survived)
+head(dead)
+
+```
+
+
+8. The data sets are about the breast cancer Wisconsin. The samples arrive periodically
+as Dr. Wolberg reports his clinical cases. The database therefore reflects this chronologi https://drive.google.com/file/d/16MFLoehCgx2MJuNSAuB2CsBy6eDIIr-
+u/view?usp=drive_link)
+
+d. Compute the descriptive statistics using different packages. Find the values of:
+d.1 Standard error of the mean for clump thickness.
+d.2 Coefficient of variability for Marginal Adhesion.
+d.3 Number of null values of Bare Nuclei.
+d.4 Mean and standard deviation for Bland Chromatin
+d.5 Confidence interval of the mean for Uniformity of Cell Shape
+
+a. Describe what is the dataset all about.
+
+This dataset is about the classification of breast cancer based on various features or cell characteristics. It has features related to cell characteristics. 
+
+The dataset consists of 699 observations and 11 variables.
+
+
+d. Compute the descriptive statistics using different packages. Find the values of:
+d.1 Standard error of the mean for clump thickness.
+d.2 Coefficient of variability for Marginal Adhesion.
+d.3 Number of null values of Bare Nuclei.
+d.4 Mean and standard deviation for Bland Chromatin
+d.5 Confidence interval of the mean for Uniformity of Cell Shape
+
+```{r}
+
+library(readr)
+library(pastecs)
+library(Hmisc)
+
+breastCancer <- read.csv("breastcancer_wisconsin.csv")
+breastCancer
+
+breastCancerStats <- stat.desc(breastCancer)
+breastCancerStats
+
+clump_thickness_SEmean <- breastCancerStats["SE.mean", "clump_thickness"]
+clump_thickness_SEmean
+
+marginal_adhesion_coefVar <- breastCancerStats["coef.var", "marginal_adhesion"]
+marginal_adhesion_coefVar
+
+bare_nucleoli_null <- breastCancerStats["nbr.null", "bare_nucleoli"]
+bare_nucleoli_null
+
+bland_chromatin_mean <- breastCancerStats["mean", "bland_chromatin"]
+bland_chromatin_mean
+
+bland_chromatin_std_dev <- breastCancerStats["std.dev", "bland_chromatin"]
+bland_chromatin_std_dev
+
+shape_uniformity_CImean <- breastCancerStats["CI.mean", "shape_uniformity"]
+shape_uniformity_CImean
+
+
+```
+
+d. How many attributes?
+
+num_attributes <- ncol(breastCancer)
+num_attributes
+
+e. Find the percentage of respondents who are malignant. Interpret the results.
+
+```{r}
+
+# Assuming class 4 is malignant
+
+percentage_malignant <- (sum(breastCancer$class == 4) / nrow(breastCancer)) * 100
+paste0("Percentage of Respondents who are Malignant: ", percentage_malignant,"%")
+
+```
+
+9. Export the data abalone to the Microsoft excel file. Copy the codes.
+
+install.packages("AppliedPredictiveModeling")
+library("AppliedPredictiveModeling")
+view(abalone)
+head(abalone)
+summary(abalone)
+
+```{r}
+
+#install.packages("AppliedPredictiveModeling")
+
+
+library("AppliedPredictiveModeling")
+library("xlsx")
+
+data(abalone)
+
+#View(abalone)
+head(abalone)
+summary(abalone)
+
+#write.xlsx(abalone, "abalone.xlsx")
+
+```
